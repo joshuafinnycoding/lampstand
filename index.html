@@ -7,7 +7,7 @@
 <meta name="description" content="A free, open, no-login Bible study tool. Read, cross-reference, search, and bring your own PDFs — all private to your device.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Frank+Ruhl+Libre:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -56,6 +56,7 @@
       <div class="context-tabs">
         <button class="ctab active" data-tab="xref">Cross-references</button>
         <button class="ctab" data-tab="commentary">Commentary</button>
+        <button class="ctab" data-tab="original">Original</button>
       </div>
       <div class="context-body" id="contextBody">
         <p class="ctx-hint">Tap any verse to see its cross-references and commentary.</p>
@@ -114,6 +115,7 @@
 
 <!-- pdf.js for client-side parsing -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
+<script src="orig.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

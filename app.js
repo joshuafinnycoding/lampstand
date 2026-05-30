@@ -178,7 +178,8 @@ function renderContext(){
     return;
   }
   if(tab==='xref') renderXrefs(body);
-  else renderCommentary(body);
+  else if(tab==='commentary') renderCommentary(body);
+  else if(tab==='original') window.OrigLang.renderOriginal(body, {book:state.book, chapter:state.chapter, verse:state.selectedVerse, bookName:BOOK_NAME[state.book]});
 }
 
 function renderXrefs(body){
@@ -252,9 +253,12 @@ function openPicker(kind){
       for(let i=1;i<=n;i++){ const b=document.createElement('button'); b.className='pick'+(i===state.chapter?' active':''); b.textContent=i;
         b.onclick=()=>{ state.chapter=i; loadChapter(); closeAll(); }; grid.appendChild(b); }
     } else {
-      state.translations
-        .filter(t=> (t.englishName+' '+t.name+' '+t.languageEnglishName).toLowerCase().includes(q.toLowerCase()))
-        .forEach(t=>{
+      const q2=q.toLowerCase();
+      const list = state.translations.filter(t=> (t.englishName+' '+t.name+' '+t.languageEnglishName).toLowerCase().includes(q2));
+      // pin English translations to the top, then the rest
+      const eng = list.filter(t=>t.language==='eng');
+      const rest = list.filter(t=>t.language!=='eng');
+      [...eng, ...rest].forEach(t=>{
           const b=document.createElement('button'); b.className='pick trans'+(t.id===state.translation?' active':'');
           b.innerHTML=`<span>${t.englishName}</span><span class="tlang">${t.languageEnglishName} · ${t.shortName}</span>`;
           b.onclick=()=>{ state.translation=t.id; loadChapter(); closeAll(); };

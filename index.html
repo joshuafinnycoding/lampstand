@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lampstand — Open Scripture Study</title>
+<meta name="description" content="A free, open, no-login Bible study tool. Read, cross-reference, search, and bring your own PDFs — all private to your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h1>Lampstand</h1>
+    </div>
+    <div class="topbar-controls">
+      <button id="searchToggle" class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button id="libraryToggle" class="icon-btn" aria-label="My library">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5v14M9 4v15M14 6l5 13M4 5h5M9 4h5"/></svg>
+      </button>
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation strip: book / chapter / translation -->
+  <nav class="navstrip">
+    <button id="bookBtn" class="nav-select"><span id="bookLabel">Genesis</span><span class="caret">▾</span></button>
+    <button id="chapterBtn" class="nav-select"><span id="chapterLabel">1</span><span class="caret">▾</span></button>
+    <div class="nav-spacer"></div>
+    <button id="translationBtn" class="nav-select translation"><span id="translationLabel">BSB</span><span class="caret">▾</span></button>
+  </nav>
+
+  <main class="workspace">
+    <!-- Reader pane -->
+    <section class="reader" id="reader" aria-label="Scripture reader">
+      <div class="reader-inner" id="readerInner">
+        <div class="placeholder">Loading…</div>
+      </div>
+      <div class="reader-foot">
+        <button id="prevChap" class="chap-nav">‹ Previous</button>
+        <button id="nextChap" class="chap-nav">Next ›</button>
+      </div>
+    </section>
+
+    <!-- Context panel -->
+    <aside class="context" id="context" aria-label="Study panel">
+      <div class="context-tabs">
+        <button class="ctab active" data-tab="xref">Cross-references</button>
+        <button class="ctab" data-tab="commentary">Commentary</button>
+      </div>
+      <div class="context-body" id="contextBody">
+        <p class="ctx-hint">Tap any verse to see its cross-references and commentary.</p>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<!-- Search overlay -->
+<div class="overlay" id="searchOverlay" hidden>
+  <div class="overlay-panel search-panel">
+    <div class="overlay-head">
+      <h2>Search everything</h2>
+      <button class="icon-btn close" data-close="searchOverlay" aria-label="Close">✕</button>
+    </div>
+    <div class="search-input-row">
+      <input type="search" id="searchInput" placeholder="Search scripture, commentary, and your PDFs…" autocomplete="off">
+      <button id="searchGo" class="primary-btn">Search</button>
+    </div>
+    <p class="search-note">Results from your PDFs and cross-references appear instantly; scripture and commentary stream in.</p>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- Library overlay -->
+<div class="overlay" id="libraryOverlay" hidden>
+  <div class="overlay-panel">
+    <div class="overlay-head">
+      <h2>My library</h2>
+      <button class="icon-btn close" data-close="libraryOverlay" aria-label="Close">✕</button>
+    </div>
+    <div class="lib-intro">
+      <p>Add your own PDFs or ebooks. They are processed and stored <strong>only on this device</strong> — nothing is ever uploaded.</p>
+      <label class="upload-btn">
+        <input type="file" id="fileInput" accept="application/pdf" multiple hidden>
+        <span>+ Add PDF</span>
+      </label>
+    </div>
+    <div class="lib-list" id="libList"></div>
+  </div>
+</div>
+
+<!-- Picker overlay (book/chapter/translation) -->
+<div class="overlay" id="pickerOverlay" hidden>
+  <div class="overlay-panel picker-panel">
+    <div class="overlay-head">
+      <h2 id="pickerTitle">Select</h2>
+      <button class="icon-btn close" data-close="pickerOverlay" aria-label="Close">✕</button>
+    </div>
+    <input type="search" id="pickerFilter" placeholder="Filter…" autocomplete="off">
+    <div class="picker-grid" id="pickerGrid"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<!-- pdf.js for client-side parsing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.mjs" type="module"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
